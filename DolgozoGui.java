@@ -238,18 +238,19 @@ public class DolgozoGui extends javax.swing.JFrame {
         sorok.remove(0);
         
         String nev, nem;
-        int kor, munkToltEv;
+        int kor;
+        int munkToltEv;
         for (String sor : sorok) {
             String[] egySor = sor.split(";");
             nev = egySor[0];
             kor = Integer.parseInt(egySor[1]);
             nem = egySor[2];
-//            if(egySor[3].isEmpty()){
-//                munkToltEv = 0;
-//            }else{
-//            munkToltEv = Integer.parseInt(egySor[3]);
-//        }
-            System.out.println("Név: "+nev + " kor: "+kor+" nem: "+nem /*+"munktév: "+munkToltEv*/);
+            if(egySor.length == 4){
+                munkToltEv = Integer.parseInt(egySor[3]);
+            }else{
+                munkToltEv =0;
+            }
+            System.out.println("Név: "+nev + " kor: "+kor+" nem: "+nem  +" munktév: "+ munkToltEv);
         }
     }
 
