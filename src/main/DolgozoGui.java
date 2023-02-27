@@ -4,19 +4,32 @@
  */
 package main;
 
+import java.awt.PopupMenu;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonModel;
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author molnar.szabrina
  */
 public class DolgozoGui extends javax.swing.JFrame {
+    
+        String nev, nem;
+        int kor;
+        int munkToltEv;
+        List<String> sorok;
+        ArrayList<String> noiNevek;
+        ArrayList<String> ferfiNevek;
+        
 
     /**
      * Creates new form DolgozoGui
@@ -24,6 +37,7 @@ public class DolgozoGui extends javax.swing.JFrame {
     public DolgozoGui() {
         try {
             Fajlbeolvas();
+            beltolt();
         } catch (IOException ex) {
             Logger.getLogger(DolgozoGui.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -40,7 +54,6 @@ public class DolgozoGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -62,11 +75,16 @@ public class DolgozoGui extends javax.swing.JFrame {
 
         jLabel1.setText("Lányok");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petra", "Éva", "Xénia" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Fiúk");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Péter", "Pál", "Róbert", "Géza" }));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Adatok"));
 
@@ -191,6 +209,13 @@ public class DolgozoGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+
+          JComboBox box = (JComboBox)evt.getSource();
+          String ujnev = beltolt();
+          box.addItem(ujnev);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -229,33 +254,50 @@ public class DolgozoGui extends javax.swing.JFrame {
         });
     }
     
-    private void Fajlbeolvas() throws IOException{
+    public List<String> Fajlbeolvas() throws IOException{
         String fn = "emberek.txt";
         Path path = Paths.get(fn);
-        List<String> sorok = Files.readAllLines(path);
+        sorok = Files.readAllLines(path);
 //        System.out.println(sorok.size());
         String elso = sorok.get(0);
         sorok.remove(0);
         
-        String nev, nem;
-        int kor;
-        int munkToltEv;
+
         for (String sor : sorok) {
             String[] egySor = sor.split(";");
             nev = egySor[0];
             kor = Integer.parseInt(egySor[1]);
             nem = egySor[2];
+//            if(nem.equals('L')){
+//                noiNevek.add(nev);
+//            }else if(nem.equals('F')){
+//                ferfiNevek.add(nev);
+//            }
             if(egySor.length == 4){
                 munkToltEv = Integer.parseInt(egySor[3]);
             }else{
                 munkToltEv =0;
             }
             System.out.println("Név: "+nev + " kor: "+kor+" nem: "+nem  +" munktév: "+ munkToltEv);
+//            System.out.println(noiNevek);
+//            System.out.println(ferfiNevek);
         }
+        
+        return sorok;
+    }
+    
+    public String beltolt(){
+        
+        for (String sor : sorok) {
+            String[] egySor = sor.split(";");
+            nev = egySor[0];
+            System.out.println(nev);
+            
+        }
+        return nev;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -272,4 +314,8 @@ public class DolgozoGui extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     // End of variables declaration//GEN-END:variables
+
+    private ButtonModel ButtonModel(String ujnev) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
